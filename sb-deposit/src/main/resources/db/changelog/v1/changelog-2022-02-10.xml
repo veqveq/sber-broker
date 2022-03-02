@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2022-02-05" author="e.vasyakov">
+        <!--Таблица для работы с аудитом-->
+        <createSequence sequenceName="hibernate_sequence"/>
+        <createTable tableName="revinfo">
+            <column name="rev" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="revtstmp" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <!--Таблица истории изменений остатков на счетах-->
+        <createSequence sequenceName="revinfo"/>
+        <createTable tableName="free_cash_aud" remarks="Счета">
+            <column name="aud_id" type="bigint" remarks="Идентификатор записи истории"
+                    autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id" type="bigint" remarks="Идентификатор остатка на счёте"/>
+            <column name="currency" type="text" remarks="Валюта"/>
+            <column name="amount" type="decimal" remarks="Количество средств"/>
+            <column name="account_id" type="bigint" remarks="Идентификатор счёта, на котором лежат средства"/>
+            <column name="change_date" type="date" remarks="Дата изменения"/>
+            <column name="rev" type="integer" remarks="Номер ревизии"/>
+            <column name="revtype" type="smallint" remarks="Тип ревизии"/>
+        </createTable>
+
+        <!--Добавление колонки Дата изменения в таблицу остатков на счёте-->
+        <addColumn tableName="free_cash">
+            <column name="change_date" type="date" remarks="Дата изменения"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

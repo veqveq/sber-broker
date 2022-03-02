@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2022-02-11-00" author="e.vasyakov">
+        <!--Добавление колонок Капитализация вклада и Счёт для начисления процентов-->
+        <addColumn tableName="account">
+            <column name="capitalized" type="boolean" remarks="Капитализация процентов"/>
+        </addColumn>
+        <addColumn tableName="account">
+            <column name="interest_account_id" type="bigint" remarks="Счёт для зачисления процентов">
+                <constraints foreignKeyName="fk_interest_account" references="account(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2022-02-11-01" author="e.vasyakov">
+        <!--Добавление колонки Описание операции в таблицу Операции со счётом-->
+        <addColumn tableName="cash_operation">
+            <column name="description" type="text" remarks="Описание операции"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2022-02-11-02" author="e.vasyakov">
+        <!--Создание таблицы Начисления по вкладам-->
+        <createTable tableName="profit" remarks="Начисления по вкладам">
+            <column name="id" type="bigint" remarks="Идентификатор" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="amount" type="decimal" remarks="Размер начисления"/>
+            <column name="currency" type="text" remarks="Валюта"/>
+            <column name="calculated_date" type="date" remarks="Дата начисления"/>
+            <column name="calculated_period_start" type="date" remarks="Начало расчетного периода"/>
+            <column name="calculated_period_end" type="date" remarks="Окончание расчётного периода"/>
+            <column name="account_id" type="bigint" remarks="Идентификатор счёта">
+                <constraints foreignKeyName="fk_profit_account" references="account(id)" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
