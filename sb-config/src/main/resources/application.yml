@@ -1,0 +1,15 @@
+server:
+  port: ${SB_CONFIG_PORT}
+
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configs
+  profiles:
+    active: native
+  security:
+    user:
+      name: ${SB_CONFIG_USER}
+      password: ${SB_CONFIG_PASSWORD}

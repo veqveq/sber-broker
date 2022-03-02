@@ -1,0 +1,17 @@
+server:
+  port: ${SB_MAIN_PORT}
+
+logging:
+  level:
+    ru.veqveq.dictionary: DEBUG
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${SB_MAIN_SCHEMA}
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+    default-schema: ${spring.jpa.properties.hibernate.default_schema}
+    parameters:
+      schema: ${spring.jpa.properties.hibernate.default_schema}

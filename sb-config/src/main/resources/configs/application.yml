@@ -1,0 +1,34 @@
+server:
+  error:
+    include-message: always
+
+app:
+  profiling:
+    enabled: true
+    long-method-execution-time-millis: 200
+    show-params: false
+
+spring:
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 100
+        order_inserts: true
+        order_updates: true
+        generate_statistics: false
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${SB_DB_HOST}:${SB_DB_PORT}/${SB_DB_DATABASE}
+    username: ${SB_DB_USER}
+    password: ${SB_DB_PASSWORD}
+
+springdoc:
+  swagger-ui:
+    path: /v1/api-docs/index.html
+    disable-swagger-default-url: true
+  api-docs:
+    path: /v1/api-docs
