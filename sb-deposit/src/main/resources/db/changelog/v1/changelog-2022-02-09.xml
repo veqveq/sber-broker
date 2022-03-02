@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2022-02-05" author="e.vasyakov">
+        <!--Таблица депозитных счетов-->
+        <createTable tableName="account" remarks="Счета">
+            <column name="id" type="bigint" remarks="Идентификатор" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="text" remarks="Название счёта">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="text" remarks="Статус счёта">
+                <constraints nullable="false"/>
+            </column>
+            <column name="calculation_strategy" type="text" remarks="Стратегия начисления процентов">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rate" type="decimal" remarks="Процентная ставка" defaultValue="0"/>
+            <column name="calculated_day" type="integer" remarks="День выплаты процентов" defaultValue="0"/>
+
+        </createTable>
+
+        <!--Таблица остатка средств на счёте-->
+        <createTable tableName="free_cash" remarks="Остаток средств на счёте">
+            <column name="id" type="bigint" remarks="Идентификатор" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="currency" type="text" remarks="Валюта">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="decimal" remarks="Количество средств" defaultValue="0.0"/>
+            <column name="account_id" type="bigint" remarks="Идентификатор счёта, на котором лежат средства">
+                <constraints foreignKeyName="fk_free_cash_account"
+                             references="account(id)"
+                             nullable="false"/>
+            </column>
+        </createTable>
+
+        <!--Таблица операций с деньгами-->
+        <createTable tableName="cash_operation" remarks="Операции с деньгами">
+            <column name="id" type="bigint" remarks="Идентификатор" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="text" remarks="Тип операции">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="decimal" remarks="Количество средств">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="text" remarks="Валюта">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="text" remarks="Статус операции">
+                <constraints nullable="false"/>
+            </column>
+            <column name="operation_date" type="date" remarks="Дата операции">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="bigint"
+                    remarks="Идентификатор депозитного счёта, по которому проведена операция">
+                <constraints foreignKeyName="fk_cash_operation_account"
+                             references="account(id)"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2022-02-11-00" author="e.vasyakov">
+        <!--Добавление колонок Время изменения статуса счёта и Дата открытия счёта в таблицу Счета-->
+        <addColumn tableName="account">
+            <column name="status_time" type="datetime" remarks="Время изменения статуса">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="account">
+            <column name="creation_date" type="date" remarks="Дата открытия счёта">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
