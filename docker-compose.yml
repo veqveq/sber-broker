@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+
+  sber-broker-postgres:
+    image: postgres:12.1-alpine
+    container_name: sber-broker-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${CT_DB_DATABASE}"
+      POSTGRES_USER: "${CT_DB_USER}"
+      POSTGRES_PASSWORD: "${CT_DB_PASSWORD}"
+    ports:
+      - "${CT_DB_PORT}:5432"
