@@ -22,9 +22,7 @@
         <module>sb-main</module>
         <module>sb-dictionary</module>
         <module>sb-config</module>
-        <module>sb-account-service</module>
         <module>sb-deposit</module>
-        <module>sb-brokerage</module>
     </modules>
 
     <properties>
