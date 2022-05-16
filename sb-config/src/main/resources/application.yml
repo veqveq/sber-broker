@@ -2,6 +2,10 @@ server:
   port: ${SB_CONFIG_PORT}
 
 spring:
+  boot:
+    admin:
+      client:
+        url: http://${SB_CONFIG_HOST}:${SB_CONFIG_PORT}
   cloud:
     config:
       server:
